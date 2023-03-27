@@ -1,0 +1,15 @@
+{
+    "object": {
+        "number": 123.123,
+        "string": "abc",
+        "boolean": true,
+        "null": null
+    },
+    "array": [
+        123.123,
+        "abc",
+        true,
+        false,
+        null
+    ]
+}
