@@ -2,10 +2,10 @@
 #include <array>
 #include <bits/chrono.h>
 #include <cassert>
+#include <chrono>
 #include <cstddef>
 #include <format>
 #include <iostream>
-#include <chrono>
 
 using namespace std;
 
@@ -47,7 +47,24 @@ void test_find_string_end() {
 
 void test_parse_array() {
     string source = "[1,\"Go to hell man\",[null, true, false],[1, 2, "
-                          "3],10.123e-12]";
+                    "3],10.123e-12]";
+
+    try {
+        json::Json e(source);
+
+        for (json::Variant &v : get<vector<json::Variant>>(e.init)) {
+            v << cout;
+            cout << endl;
+        }
+    } catch (string msg) {
+        cout << msg << endl;
+    }
+
+    cout << "Nothing broke!" << endl;
+}
+
+void test_parse_object() {
+    string source = "{\"hello\": [1,2,3,4,5],\n\n \"mellow\": {\"abc\": 5}}";
 
     try {
         json::Json e(source);
@@ -65,8 +82,9 @@ void test_parse_array() {
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
-    test_parse_array();
+    test_parse_object();
     auto end = chrono::high_resolution_clock::now();
 
-    cout << chrono::duration_cast(end - start) << endl;
+    cout << chrono::duration_cast<chrono::microseconds>(end - start) << endl;
 }
+
